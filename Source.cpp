@@ -50,10 +50,10 @@ int main(int argc, char** argv)
 		int kernel_size;   // permitted sizes: 3, 5, 7, 9 etc
 		cout << "Select the size of kernel (it should be an odd number from 3 onwards): \n" << endl;
 		cin >> kernel_size;
-
+		//choise given to user to chose what he wants dose he wants to select the median filter, Average filter , Lee filter,(optional) identify operator need to be compleated it will detect by what way the result would be perfect.
 		// Defining the kernel here
 		int selection;
-		cout << "Select the type of kernel:\n" << "1. Identity Operator \n2. Mean Filter \n3. Average filter \n4. Lee Sigma Filter\n-> ";
+		cout << "Select the type of kernel:\n" << "1. Identity Operator \n2. Median Filter \n3. Average filter \n4. Lee Sigma Filter\n-> ";
 		cin >> selection;
 		switch (selection) {
 		case 1:
@@ -192,12 +192,10 @@ int main(int argc, char** argv)
 
 	}
 	vector<Mat> channels;
-
-
 	Mat g;
 	g = Mat::zeros(Size(tmp.rows, tmp.cols), CV_32F);
+	//Apply paulidecomposition
 	Mat alpha, Beta, Gamma;
-
 	Beta = c + a;
 	alpha = c - a;
 	Gamma = b;
@@ -220,149 +218,8 @@ int main(int argc, char** argv)
 	//cv::resize(cm_img0, cm_img0, cv::Size(tmp3.cols *2, tmp3.rows *2), INTER_CUBIC);
 	namedWindow("img", WINDOW_AUTOSIZE);
 	imshow("img", cm_img0);
-	/*cv::Mat labels;
-	cv::Mat centers(8, 1, CV_32FC1);
-	// Create a destination Mat object
-	Mat im_gray;
-	Mat img_bw;
-	Mat img_final;
-
-	Mat im_rgb = cm_img0;
-	im_rgb.convertTo(im_rgb, CV_8UC1);
-	cvtColor(im_rgb, im_gray, CV_RGB2GRAY);
-	*/
-
-	/*	adaptiveThreshold(im_gray, img_bw, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 105, 1);
-
-
-	dilate(img_bw, img_final, 0, Point(-1, -1), 2, 1, 1);
-	imshow("dilate", img_final);
-	//cm_img0 = cm_img0 - dst;
-	cm_img0.convertTo(cm_img0, CV_32F);
-	/*
-	//	Mat labels;
-	int clusterCount = 2;
-	//	Mat centers(clusterCount, 1, cm_img0.type());
-
-	//	int clusterCount = 2;
-	int dimensions = 5;
-	int sampleCount = 50;
-
-	// values of 1st half of data set is set to 10
-	//change the values of 2nd half of the data set; i.e. set it to 20
-
-
-	kmeans(cm_img0, clusterCount, labels, TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 10, 1.0), 3, KMEANS_PP_CENTERS, centers);
-	// we can print the matrix directly.
-	//cout << "Data:" << cm_img0 << endl;
-	cout << "Center:" << centers << endl;
-	cout << "Labels: " << labels << endl;
-
-	namedWindow("contrast stretching", CV_WINDOW_AUTOSIZE);
-	imshow("contrast stretching", cm_img0);
-	/*Mat new_image(cm_img0.size(), cm_img0.type());
-	for (int y = 0; y < cm_img0.rows; y++){
-	for (int x = 0; x < cm_img0.cols; x++)
-	{
-	int cluster_idx = labels.at<int>(y + x*cm_img0.rows, 0);
-	new_image.at<Vec3b>(y, x)[0] = centers.at<float>(cluster_idx, 0);
-	new_image.at<Vec3b>(y, x)[1] = centers.at<float>(cluster_idx, 1);
-	new_image.at<Vec3b>(y, x)[2] = centers.at<float>(cluster_idx, 2);
-	}
-	}
-	imshow("clustered image", new_image);
-
-	vector<Mat> array_to_merge;
-	array_to_merge.push_back(cm_img1);
-	array_to_merge.push_back(cm_img0);
-	array_to_merge.push_back(cm_img2);
-	std::cout << "Red:   " << array_to_merge[2].size().width << " x " << array_to_merge[2].size().height << " x " << array_to_merge[2].channels() << std::endl;
-
-	cv::Mat color;
-
-	cv::merge(array_to_merge, color);
-	namedWindow("merge", CV_WINDOW_AUTOSIZE);
-	imshow("merge", color);*/
-	/*int r1, s1, r2, s2;
-	cout << "Enter r1: " << endl; cin >> r1;
-	cout << "Enter s1: " << endl; cin >> s1;
-	cout << "Enter r2: " << endl; cin >> r2;
-	cout << "Enter s2: " << endl; cin >> s2;
-	Mat new_image = result.clone();
-	for (int y = 0; y < result.rows; y++) {
-	uchar* data = result.ptr<uchar>(y);
-	uchar* data_new = new_image.ptr<uchar>(y);
-	for (int x = 0; x < dst.cols; x++) {
-	int output;
-	if (0 <= (int)data[x*result.channels()+ 0] && (int)data[x*result.channels() + 0] <= r1) {
-	output = s1 / r1 * x;
-	}
-	else if (r1 < x && x <= r2) {
-	output = ((s2 - s1) / (r2 - r1)) * (x - r1) + s1;
-	}
-	else if (r2 < x && x <= 255) {
-	output = ((255 - s2) / (255 - r2)) * (x - r2) + s2;
-	}
-	data_new[x*new_image.channels() + 0] = data_new[x*new_image.channels() + 1]
-	= data_new[x*new_image.channels() + 2]
-	= output;
-
-	}
-	}
-	namedWindow("contrast stretching", CV_WINDOW_AUTOSIZE);
-	imshow("contrast stretching", new_image);*/
-
 	waitKey(0);
-
 	destroyAllWindows(); //destroy all open windows
-
 	return 0;
 }
-/*
-#include <iostream>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
-using namespace cv;
-using namespace std;
-
-
-int main()
-{
-Mat image = imread("C:/Users/NISHANK SINGHAL/Desktop/imagery_HH.tif", IMREAD_ANYCOLOR);
-Mat new_image = image.clone();
-
-int r1, s1, r2, s2;
-cout << "Enter r1: " << endl; cin >> r1;
-cout << "Enter s1: " << endl; cin >> s1;
-cout << "Enter r2: " << endl; cin >> r2;
-cout << "Enter s2: " << endl; cin >> s2;
-
-for (int y = 0; y < image.rows; y++) {
-for (int x = 0; x < image.cols; x++) {
-for (int c = 0; c < 3; c++) {
-int output;
-if (0 <= image.at<Vec3b>(y, x)[c] && image.at<Vec3b>(y, x)[c] <= r1) {
-output = s1 / r1 * x;
-}
-else if (r1 < x && x <= r2) {
-output = ((s2 - s1) / (r2 - r1)) * (x - r1) + s1;
-}
-else if (r2 < x && x <= 255) {
-output = ((255 - s2) / (255 - r2)) * (x - r2) + s2;
-}
-new_image.at<Vec3b>(y, x)[c] = saturate_cast<uchar>(output);
-}
-}
-}
-
-namedWindow("Original Image", CV_WINDOW_AUTOSIZE);
-imshow("Original Image", image);
-
-namedWindow("New Image", CV_WINDOW_AUTOSIZE);
-imshow("New Image", new_image);
-
-waitKey();
-
-return 0;
-}*/
